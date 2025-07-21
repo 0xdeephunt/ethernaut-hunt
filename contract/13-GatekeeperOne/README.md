@@ -8,7 +8,7 @@ Make it past the gatekeeper and register as an entrant to pass this level.
 * Although you can use call{gas: xxx} to specify the amount of gas sent with a function call, you cannot directly control the exact value of gasleft() inside the called contract. The actual gasleft() value depends on how much gas has been consumed before the gasleft() check. Therefore, you must try different gas values iteratively to find one that satisfies gasleft() % 8191 == 0.
 
 ### Attack Steps
-1. Deploy Building Contract GatekeeperOneAttack. Dis
+1. Deploy contract GatekeeperOneAttack. 
 
 2. Before executing the attack, display the entrant value of the target contract - it would be zero.
     ```bash
