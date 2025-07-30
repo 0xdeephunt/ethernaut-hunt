@@ -59,7 +59,7 @@ https://www.evm.codes/playground
     | Bytecode | Opcodes        | Description                                                         |
     |----------|----------------|---------------------------------------------------------------------|
     | 600a     | PUSH1 0x0a     | ; length of runtime bytecode                                        |
-    | 600c     | PUSH1 0x 0c    | ; offset of runtime bytecode within this creation bytecode          |
+    | 600c     | PUSH1 0x0c     | ; offset of runtime bytecode within this creation bytecode          |
     | 6000     | PUSH1 0x00     | ; memory address to copy to                                         |
     | 39       | CODECOPY       | ; copy the runtime bytecode from 0x0c to memory 0x00 for 0x0a bytes |
     | 600a     | PUSH1 0x0a     | ; length to return                                                  |

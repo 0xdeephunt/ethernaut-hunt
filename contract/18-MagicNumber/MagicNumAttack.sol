@@ -16,8 +16,7 @@ contract MagicNumAttack {
     address public contractAddress;
     uint256 public meaningOfLife;
 
-    // To deploy the bytecode of attack contract.
-    // bytecode: "602a60005260206000f3"
+    // To deploy the bytecode of contract.
     function attackPrepare(bytes memory _bytecode) public {
         address addr;
 
