@@ -4,7 +4,7 @@
 To solve this level, you only need to provide the Ethernaut with a Solver, a contract that responds to whatIsTheMeaningOfLife() with the right 32 byte number.
 The solver's code needs to be really tiny. Really reaaaaaallly tiny. Like freakin' really really itty-bitty tiny: 10 bytes at most.
 
-### Key InsightsUse
+### Key Insights
 * Bytecode
 
 ### Attack Steps

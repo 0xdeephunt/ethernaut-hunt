@@ -3,7 +3,7 @@
 ### Wargame
 If you can deny the owner from withdrawing funds when they call withdraw() (whilst the contract still has funds, and the transaction is of 1M gas or less) you will win this level.
 
-### Key InsightsUse
+### Key Insights
 * gas
 
 ### Attack Steps

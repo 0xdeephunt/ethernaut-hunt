@@ -3,7 +3,7 @@
 ### Wargame
 The goal of this level is for you to claim ownership of the instance you are given.
 
-### Key InsightsUse
+### Key Insights
 * delegatecall
 * storage slot
 * Use delegatecall to overwrite the owner storage slot via a malicious library contract.

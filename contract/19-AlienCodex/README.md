@@ -3,7 +3,7 @@
 ### Wargame
 Claim ownership to complete the level.
 
-### Key InsightsUse
+### Key Insights
 * Storage Slot
 
 ### Attack Steps
