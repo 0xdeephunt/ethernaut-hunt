@@ -63,3 +63,41 @@ const fortaABI = [
   
 - **If the DetectionBot is NOT registered**:  
   The attack will succeed, transferring the "DET" token from the `CryptoVault` contract to the `player` address.
+
+
+## Appendix: DoubleEntryPoint Exploit Call Flow Diagram
+
+  ```
++----------------+       +-------------------+       +-----------------+       +-----------------+
+|      EOA       |       |   CryptoVault     |       |   LegacyToken   |       | DoubleEntryPoint|
+| (External User)|       |     Contract      |       |     Contract    |       |     Contract    |
++----------------+       +-------------------+       +-----------------+       +-----------------+
+        |                        |                           |                           |
+        |  1. calls              |                           |                           |
+        +----------------------->|                           |                           |
+        |   sweepToken(legacyTokenAddr)                      |                           |
+        |                        |                           |                           |
+        |                        |  2. calls                 |                           |
+        |                        +-------------------------->|                           |
+        |                        |transfer(recipient, amount)|                           |
+        |                        |(msg.sender = CryptoVault) |                           |
+        |                        |                           |                           |
+        |                        |                           |  3. calls                 |
+        |                        |                           +-------------------------->|
+        |                        |                           | delegateTransfer(recipient, amount, origSender=CryptoVault)|
+        |                        |                           | (msg.sender = LegacyToken)|                           |
+        |                        |                           |                           |                           |
+        |                        |                           |                           | 4. calls (internal)       |
+        |                        |                           |                           +-------------------------->|
+        |                        |                           |                           |_transfer(from, to, value) |
+        |                        |                           |                           |                           |
++----------------+       +-------------------+       +-----------------+       +-----------------+
+|      EOA       |       |   CryptoVault     |       |   LegacyToken   |       | DoubleEntryPoint|
++----------------+       +-------------------+       +-----------------+       +-----------------+
+  ```
+
+**Diagram Explanation**:
+1. EOA -> CryptoVault.sweepToken: An external user initiates a transaction, calling the sweepToken function on the CryptoVault contract with the LegacyToken address as an argument.
+2. CryptoVault -> LegacyToken.transfer: Inside its sweepToken function, the CryptoVault contract calls transfer on the LegacyToken. At this point, the msg.sender is the CryptoVault contract.
+3. LegacyToken -> DoubleEntryPoint.delegateTransfer: The LegacyToken's transfer function has a unique implementation. Instead of performing a standard transfer, it calls delegateTransfer on the DoubleEntryPoint contract, passing the CryptoVault address as the origSender parameter.
+4. DoubleEntryPoint -> _transfer: The delegateTransfer function first verifies that its caller (msg.sender) is the legitimate LegacyToken contract. Upon successful verification, it proceeds to call the internal _transfer function to execute the token transfer using the origSender address provided.
